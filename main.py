@@ -3,16 +3,21 @@ from planner_actuator.reasoning_engine import ReasoningEngine
 from planner_actuator.actuation_kernel import ActuationKernel
 from seer_engine import SeerEngine
 import time
+import psutil 
+
+def get_battery_level():
+    battery = psutil.sensors_battery()
+    if battery:
+        return int(battery.percent)
+    return 85
 
 def simulate_chrono_os():
-    """
-    Main function to simulate the ChronoOS workflow.
-    """
+    
     print("--- ChronoOS Simulation Started ---")
     
     # Perception & Prediction
     seer = SeerEngine()
-    current_battery = 85
+    current_battery = get_battery_level()
     recent_app_history = ["Code.exe", "chrome.exe", "Spotify.exe", "ms-teams.exe", "GitHubDesktop.exe"]
     predicted_app_sequence = seer.predict_next_apps(recent_app_history)
     user_goal = "make it to 5 PM"
