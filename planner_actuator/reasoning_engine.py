@@ -1,51 +1,42 @@
-from data_store import get_app_power_scores
-
+from .data_store import get_app_data 
 class ReasoningEngine:
     def __init__(self, total_budget):
         self.total_budget = total_budget
-        self.app_scores = get_app_power_scores()
+        _,self.app_categories, self.category_scores = get_app_data()
         self.allocated_budget = 0
+
+    def _get_power_score_for_app(self, app_name):
+        """Finds the power score for a given app name via its category."""
+        category = self.app_categories.get(app_name, "default")
+        score = self.category_scores.get(category, self.category_scores["miscellaneous"])
+        return score
 
     def plan_allocation(self, predicted_app_sequence):
         """
         Allocates the total energy budget across a predicted app sequence.
-        
-        :param predicted_app_sequence: A list of app names.
-        :return: A list of throttling directives.
         """
         throttling_directives = []
-        remaining_budget = self.total_budget
         
-        # Determine total 'power need' of the session
-        total_power_need = sum(self.app_scores.get(app, self.app_scores['medium_power_app']) for app in predicted_app_sequence)
+        total_power_need = sum(self._get_power_score_for_app(app) for app in predicted_app_sequence)
         
         if total_power_need == 0:
             return []
 
-        # Simple Proportional Allocation Strategy
         for app in predicted_app_sequence:
-            power_score = self.app_scores.get(app, self.app_scores['medium_power_app'])
+            power_score = self._get_power_score_for_app(app)
             
-            # Calculate the proportion of budget for this app
             proportional_budget = (power_score / total_power_need) * self.total_budget
+
+            action = 'full_performance' 
+            if power_score <= 2: 
+                action = 'throttle_lightly'
             
             directive = {
                 'app': app,
-                'priority': 'high' if power_score >= 4 else 'low',
                 'allocated_percentage': proportional_budget,
-                'action': 'full_performance' # Default action
+                'action': action
             }
             
-            # Rule-based Throttling
-            if proportional_budget > remaining_budget:
-                directive['action'] = 'throttle_aggressively'
-            elif directive['priority'] == 'low':
-                directive['action'] = 'throttle_lightly'
-            
             throttling_directives.append(directive)
-            remaining_budget -= proportional_budget
             
-        self.allocated_budget = self.total_budget - remaining_budget
-        
         return throttling_directives
-        

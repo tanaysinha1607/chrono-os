@@ -1,6 +1,7 @@
-from planner_utils import calculate_session_budget
-from reasoning_engine import ReasoningEngine
-from actuation_kernel import ActuationKernel
+from planner_actuator.planner_utils import calculate_session_budget
+from planner_actuator.reasoning_engine import ReasoningEngine
+from planner_actuator.actuation_kernel import ActuationKernel
+from seer_engine import SeerEngine
 import time
 
 def simulate_chrono_os():
@@ -9,16 +10,18 @@ def simulate_chrono_os():
     """
     print("--- ChronoOS Simulation Started ---")
     
-    # Step 1: Perception & Prediction (Simulated)
+    # Perception & Prediction
+    seer = SeerEngine()
     current_battery = 85
-    predicted_app_sequence = ["Spotify", "Google Maps", "Reddit", "Slack"]
+    recent_app_history = ["Code.exe", "chrome.exe", "Spotify.exe", "ms-teams.exe", "GitHubDesktop.exe"]
+    predicted_app_sequence = seer.predict_next_apps(recent_app_history)
     user_goal = "make it to 5 PM"
     
     print(f"\nUser context detected: {current_battery}% battery. Goal: {user_goal}")
     print(f"Predicted app journey: {predicted_app_sequence}")
     time.sleep(1)
 
-    # Step 2: Strategy (The Planner)
+    # Strategy (The Planner)
     session_budget = calculate_session_budget(current_battery)
     print(f"\nPlanner has set a total energy budget of {session_budget}% for this session.")
     time.sleep(1)
@@ -31,7 +34,7 @@ def simulate_chrono_os():
         print(f"  - App: {directive['app']}, Action: {directive['action']}, Budget: {directive['allocated_percentage']:.2f}%")
     time.sleep(2)
     
-    # Step 3: Allocation & Actuation (The Governor)
+    # Allocation & Actuation (The Governor)
     governor = ActuationKernel()
     governor.set_initial_battery(current_battery)
     governor.apply_directives(throttling_directives)
