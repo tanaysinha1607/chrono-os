@@ -77,4 +77,8 @@ Conversion (convert_to_tflite.py): The final Keras model is converted to the Ten
 Knowledge Base (data_store.py): The Planner uses a two-level dictionary system to determine an app's power consumption. It maps an executable name (e.g., chrome.exe) to a category (web_browser), and then finds the power score for that category. This makes the system highly scalable.
 Budget Allocation (reasoning_engine.py): The Planner calculates the total "power need" for a predicted session by summing the scores of all apps. It then allocates the session's total energy budget proportionally. For example, an app with a score of 4 will receive twice the budget of an app with a score of 2.
 
+**Architectural Diagram:**
+<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/0d8ec6db-7c3d-4942-8e5a-d0969e059247" />
+ 
+
 
