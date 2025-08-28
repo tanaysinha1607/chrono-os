@@ -2,6 +2,7 @@ from planner_actuator.planner_utils import calculate_session_budget
 from planner_actuator.reasoning_engine import ReasoningEngine
 from planner_actuator.actuation_kernel import ActuationKernel
 from seer_engine import SeerEngine
+from data_collector import get_recent_app_history 
 import time
 import psutil 
 
@@ -18,7 +19,7 @@ def simulate_chrono_os():
     # Perception & Prediction
     seer = SeerEngine()
     current_battery = get_battery_level()
-    recent_app_history = ["Code.exe", "chrome.exe", "Spotify.exe", "ms-teams.exe", "GitHubDesktop.exe"]
+    recent_app_history = get_recent_app_history()
     predicted_app_sequence = seer.predict_next_apps(recent_app_history)
     user_goal = "make it to 5 PM"
     
