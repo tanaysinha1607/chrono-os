@@ -2,12 +2,10 @@ import pandas as pd
 import numpy as np
 import json
 
-# --- Configuration ---
-LOG_FILE = 'app_usage_log.csv' # Your consolidated log file
+LOG_FILE = 'app_usage_log.csv' 
 SESSION_TIMEOUT_MINUTES = 15
 SEQUENCE_LENGTH = 5 
 
-# --- Load and Clean Data ---
 df = pd.read_csv(LOG_FILE)
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 df = df.dropna().sort_values('timestamp')
@@ -15,11 +13,9 @@ df = df.dropna().sort_values('timestamp')
 IGNORE_APPS = ['explorer.exe', 'Finder', 'Window Manager', 'TextInputHost.exe']
 df = df[~df['app_name'].isin(IGNORE_APPS)]
 
-# --- Sessionization ---
 df['time_diff'] = df['timestamp'].diff().dt.total_seconds() / 60
 df['session_id'] = (df['time_diff'] > SESSION_TIMEOUT_MINUTES).cumsum()
 
-# --- Create Vocabulary ---
 unique_apps = df['app_name'].unique().tolist()
 app_to_int = {app: i for i, app in enumerate(unique_apps)}
 int_to_app = {i: app for i, app in enumerate(unique_apps)}
@@ -30,7 +26,6 @@ with open('app_vocab.json', 'w') as f:
 
 print(f"Vocabulary created with {vocab_size} unique apps.")
 
-# --- Generate Sequences ---
 df['app_int'] = df['app_name'].map(app_to_int)
 
 sequences = []
@@ -43,7 +38,6 @@ for session_id, group in df.groupby('session_id'):
 
 print(f"Generated {len(sequences)} sequences.")
 
-# --- Prepare Data for Model Training ---
 sequences = np.array(sequences)
 X = sequences[:, :-1] 
 y = sequences[:, -1]  

@@ -15,7 +15,6 @@ converter.target_spec.supported_ops = [
 ]
 converter._experimental_lower_tensor_list_ops = False
 
-# Tflite model
 tflite_model = converter.convert()
 
 tflite_model_path = 'chrono_os_seer.tflite'
@@ -27,7 +26,6 @@ print(f"Original Keras model size: {tf.io.gfile.stat(keras_model_path).length / 
 print(f"Quantized TFLite model size: {len(tflite_model) / 1024:.2f} KB")
 
 
-# Verify the tflite model
 print("\nVerifying the TFLite model...")
 interpreter = tf.lite.Interpreter(model_path=tflite_model_path)
 interpreter.allocate_tensors()
@@ -35,7 +33,6 @@ interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
-# Dummy input tensor
 dummy_input = np.random.randint(0, 50, size=input_details[0]['shape']).astype(np.float32)
 
 interpreter.set_tensor(input_details[0]['index'], dummy_input)

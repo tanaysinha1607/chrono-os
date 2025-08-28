@@ -4,7 +4,6 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Embedding, LSTM, Dense
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 
-# --- Load Processed Data ---
 data = np.load('processed_data.npz')
 X = data['X']
 y = data['y']
@@ -23,11 +22,9 @@ model = Sequential([
 
 model.summary()
 
-# Compiling
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 checkpoint = ModelCheckpoint('best_app_predictor.h5', monitor='val_accuracy', save_best_only=True, mode='max')
-#early stop
 early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
 
 # Training 
