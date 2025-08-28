@@ -7,11 +7,6 @@ venv/
 __pycache__/
 *.pyc
 
-# Generated data and model files
-*.csv
-*.npz
-*.h5
-*.tflite
 
 # Editor and OS-specific files
 .vscode/
