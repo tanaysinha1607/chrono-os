@@ -1,7 +1,7 @@
 from planner_actuator.planner_utils import calculate_session_budget
 from planner_actuator.reasoning_engine import ReasoningEngine
 from planner_actuator.actuation_kernel import ActuationKernel
-from seer_layer.seer_engine import SeerEngine
+from seer_engine import SeerEngine
 import time
 
 def simulate_chrono_os():
