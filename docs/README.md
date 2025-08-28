@@ -1,4 +1,4 @@
-#### **ChronoOS - A Proactive Energy Strategist (Windows Prototype)**
+##### **ChronoOS - A Proactive Energy Strategist (Windows Prototype)**
 Welcome to the complete documentation for the ChronoOS project. This document covers our unique approach, technical architecture, implementation details, and a full guide to setting up and running the simulation.
 
 #### Table of Contents
@@ -81,3 +81,4 @@ Conversion (convert_to_tflite.py): The final Keras model is converted to the Ten
 **The Planner: Rule-Based Logic**
 Knowledge Base (data_store.py): The Planner uses a two-level dictionary system to determine an app's power consumption. It maps an executable name (e.g., chrome.exe) to a category (web_browser), and then finds the power score for that category. This makes the system highly scalable.
 Budget Allocation (reasoning_engine.py): The Planner calculates the total "power need" for a predicted session by summing the scores of all apps. It then allocates the session's total energy budget proportionally. For example, an app with a score of 4 will receive twice the budget of an app with a score of 2.
+
