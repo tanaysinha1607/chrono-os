@@ -9,7 +9,7 @@
 
 **Project Artefacts**
 
-**Technical Documentation** - Docs 
+**Technical Documentation** - docs
 
 **Source Code** - Source 
 
