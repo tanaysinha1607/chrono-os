@@ -24,7 +24,7 @@ This fusion of a predictive sequence model (The Seer) with a real-time resource 
 5. One-Click Execution: A master script (start_simulation.py) handles all setup, including launching the background data logger, providing a seamless demo experience.
 
 #### 🎨 Design Link
-[Link to our Figma Design Prototype] (<- Add your Figma link here)
+https://www.figma.com/design/5LQDS4qmZwjODHqyo6yBdR/chronoOS?node-id=0-1&t=6OByGANFlAQh4wr4-1 
 
 #### 🏛️ Technical Architecture
 The ChronoOS agent is designed with a layered, modular architecture. Each layer has a distinct responsibility, making the system clean, robust, and scalable.
@@ -46,12 +46,7 @@ Prototype: actuation_kernel.py is a simulation module that receives directives, 
 
 #### 🛠️ Technical Stack
 This project leverages a range of powerful, open-source libraries.
-1. TensorFlow: The primary machine learning framework used to design and train the LSTM neural network.
-2. Keras: A high-level API within TensorFlow used to define the model architecture.
-3. NumPy: The fundamental package for numerical computation in Python.
-4. Pandas: Used for data analysis and manipulation of the app usage logs.
-5. psutil: A cross-platform library used to get the foreground application and real-time battery level.
-5. pywin32: Provides access to Windows APIs to identify the foreground window.
+![WhatsApp Image 2025-08-28 at 23 42 15_b8568f0d](https://github.com/user-attachments/assets/ab301e00-6f38-4048-aa88-8b4b87a3aa77)
 
 #### 🚀 Installation & User Guide
 This guide provides step-by-step instructions to set up and run the simulation.
@@ -81,4 +76,5 @@ Conversion (convert_to_tflite.py): The final Keras model is converted to the Ten
 **The Planner: Rule-Based Logic**
 Knowledge Base (data_store.py): The Planner uses a two-level dictionary system to determine an app's power consumption. It maps an executable name (e.g., chrome.exe) to a category (web_browser), and then finds the power score for that category. This makes the system highly scalable.
 Budget Allocation (reasoning_engine.py): The Planner calculates the total "power need" for a predicted session by summing the scores of all apps. It then allocates the session's total energy budget proportionally. For example, an app with a score of 4 will receive twice the budget of an app with a score of 2.
+
 
